@@ -20,7 +20,8 @@ class Journal
     //display all the journal entries so far to the terminal
     public void DisplayJournal()
     {
-        foreach (Entry entry in entries) {
+        foreach (Entry entry in entries)
+        {
             Console.WriteLine(entry);
         }
 
@@ -65,6 +66,33 @@ class Journal
         {
             Console.WriteLine("File not found");
         }
+    }
+
+    public void SearchDate(string search)
+    {
+        if (DateTime.TryParse(search, out DateTime sDate))
+        {
+            bool found = false;
+            foreach (Entry entry in entries)
+            {
+                if (entry.Date.Date == sDate.Date)
+                {
+                    Console.WriteLine(entry);
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                Console.WriteLine("No journal entry was found for this date");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Invalid date format. Use mm/dd/yyyy");
+        }
+        
+        
     }
 
 }

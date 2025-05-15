@@ -8,7 +8,9 @@ class Menu
         Console.WriteLine("2. Display Journal");
         Console.WriteLine("3. Save Journal to a File");
         Console.WriteLine("4. Load Journal from a File");
-        Console.WriteLine("5. Exit");
+        Console.WriteLine("5. Search by Date");
+        Console.WriteLine("6. Exit");
+        Console.Write(">");
 
         string userChoice = Console.ReadLine();
         int choice = int.Parse(userChoice);
@@ -21,7 +23,7 @@ class Menu
     public void CreateMenu(Journal journal)
     {
         int response = 0;
-        while (response != 5)
+        while (response != 6)
         {
             response = DisplayMenu();
             switch (response)
@@ -43,6 +45,11 @@ class Menu
                     journal.LoadJournal(loadFile);
                     break;
                 case 5:
+                    Console.Write("Enter Date: ");
+                    string search = Console.ReadLine();
+                    journal.SearchDate(search);
+                    break;
+                case 6:
                     break;
             }
         }
