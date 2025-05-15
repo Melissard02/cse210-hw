@@ -5,13 +5,13 @@ using System.IO;
 class Journal
 {
     //Makin a list to hold our entry objects
-    private List<Entry> entries = new List<Entry>();
+    private List<Entry> _entries = new List<Entry>();
 
     public void AddEntry()
     {
         Entry newEntry = new Entry();
         newEntry.CreateEntry();
-        entries.Add(newEntry);
+        _entries.Add(newEntry);
     }
 
 
@@ -20,7 +20,7 @@ class Journal
     //display all the journal entries so far to the terminal
     public void DisplayJournal()
     {
-        foreach (Entry entry in entries)
+        foreach (Entry entry in _entries)
         {
             Console.WriteLine(entry);
         }
@@ -32,7 +32,7 @@ class Journal
     {
         using (StreamWriter transcribe = new StreamWriter(filename))
         {
-            foreach (Entry entry in entries)
+            foreach (Entry entry in _entries)
             {
                 transcribe.WriteLine(entry);
             }
@@ -58,7 +58,7 @@ class Journal
 
                     string response = reader.ReadLine();
                     entry.Response = response;
-                    entries.Add(entry);
+                    _entries.Add(entry);
                 }
             }
         }
@@ -73,7 +73,7 @@ class Journal
         if (DateTime.TryParse(search, out DateTime sDate))
         {
             bool found = false;
-            foreach (Entry entry in entries)
+            foreach (Entry entry in _entries)
             {
                 if (entry.Date.Date == sDate.Date)
                 {

@@ -7,7 +7,7 @@ class Entry
     public string Response { get; set; }
     public DateTime Date { get; set; }
 
-    private List<string> prompts = new List<string> {"Who was the most interesting person I interacted with today?",
+    private List<string> _prompts = new List<string> {"Who was the most interesting person I interacted with today?",
         "What was the best part of my day?",
         "How did I see the hand of the Lord in my life today?",
         "What was the strongest emotion I felt today?",
@@ -46,7 +46,7 @@ class Entry
     public void RandomPrompt()
     {
         Random r = new Random();
-        Prompt = prompts[r.Next(prompts.Count)];
+        Prompt = _prompts[r.Next(_prompts.Count)];
         //return prompts[prompt];
     }
 
@@ -80,9 +80,4 @@ class Entry
         return $"{Date.ToShortDateString()} - {Prompt}\n{Response}";
     }
 
-    // public string GetEntry()
-    // {
-    //     Entry myEntry = new Entry();
-    //     myEntry.CreateEntry();
-    // }
 }
