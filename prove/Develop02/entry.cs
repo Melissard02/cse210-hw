@@ -1,11 +1,17 @@
 using System.Collections.Generic;
 using System;
 
-class Entries
+class Entry
 {
-    static string GetPrompts()
-    {
-       List<string> prompts = new List<string> {"What was the best part of your day?",
+    public string Prompt { get; set; }
+    public string Response { get; set; }
+    public DateTime Date { get; set; }
+
+    private List<string> prompts = new List<string> {"Who was the most interesting person I interacted with today?",
+        "What was the best part of my day?",
+        "How did I see the hand of the Lord in my life today?",
+        "What was the strongest emotion I felt today?",
+        "If I had one thing I could do over today, what would it be? What was the best part of your day?",
         "What was the most memorable part of your day?",
         "What challenged you today, and how did you respond?",
         "How did you make progress—personally, academically, or professionally?",
@@ -37,37 +43,46 @@ class Entries
         "Describe how you handled a difficult situation today.",
         "What's something you'd like to tell your future self about today?"};
 
+    public void RandomPrompt()
+    {
         Random r = new Random();
-        int randomPrompt = r.Next(prompts.Count);
-        return prompts[randomPrompt];
+        Prompt = prompts[r.Next(prompts.Count)];
+        //return prompts[prompt];
     }
 
 
 
-    static string GetResponse(string prompt)
+    public void GetResponse()
     {
-        Console.WriteLine(prompt);
-        string response = Console.ReadLine();
+        Console.WriteLine(Prompt);
+        Console.Write(">");
+        Response = Console.ReadLine();
 
-        return response;
     }
 
 
-    static string DateStamp()
+    public void DateStamp()
     {
-        DateTime now = DateTime.Now;
-        string date = now.ToString();
-    
-        return date;
+        Date = DateTime.Now;
+        //string date = now.ToString();
     }
 
-    static string GetEntry()
+    public void CreateEntry()
     {
-        string prompt = GetPrompts();
-        string response = GetResponse(prompt);
-        string date = DateStamp();
-        string entry = $"{date} {prompt}: {response}";
-
-        return entry;
+        RandomPrompt();
+        GetResponse();
+        DateStamp();
+        //string entry = $"{date} {prompt}: {response}";
     }
+
+    public override string ToString()
+    {
+        return $"{Date.ToShortDateString()} - {Prompt}\n{Response}";
+    }
+
+    // public string GetEntry()
+    // {
+    //     Entry myEntry = new Entry();
+    //     myEntry.CreateEntry();
+    // }
 }
