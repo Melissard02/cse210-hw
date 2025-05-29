@@ -7,39 +7,57 @@ class Scripture
 
     private Reference _reference;
 
+    private string _fullText;
+
     public Scripture(string name, int chapter, int verse, string text)
     {
         _reference = new Reference(name, chapter, verse);
         _words = ConvertToWords(text);
+        _fullText = text;
     }
 
     public Scripture(string name, int chapter, int startVerse, int endVerse, string text)
     {
         _reference = new Reference(name, chapter, startVerse, endVerse);
         _words = ConvertToWords(text);
+        _fullText = text;
     }
 
     public Scripture(Reference reference, string text)
     {
         _reference = reference;
         _words = ConvertToWords(text);
+        _fullText = text;
     }
 
     public bool HideSomeWords()
     {
-        Random rand = new Random();
-        int wordsToHide = 3;
-        int count = 0;
+        List<Word> unhiddenWords = new List<Word>();
 
-        while (count < wordsToHide)
+        foreach (Word word in _words)
         {
-            int index = rand.Next(_words.Count);
-            if (!_words[index].IsHidden())
+            if (!word.IsHidden())
             {
-                _words[index].SetIsHidden(true);
-                count++;
+                unhiddenWords.Add(word);
             }
         }
+
+        if (unhiddenWords.Count == 0)
+        {
+            return true;
+        }
+
+
+        Random rand = new Random();
+        int wordsToHide = Math.Min(3, unhiddenWords.Count);
+
+        for (int i = 0; i < wordsToHide; i++)
+        {
+            int index = rand.Next(unhiddenWords.Count);
+            unhiddenWords[index].SetIsHidden(true);
+            unhiddenWords.RemoveAt(index);
+        }
+
         return NumberOfHiddenWords() == _words.Count;
     }
 
@@ -57,6 +75,17 @@ class Scripture
     {
         return _reference.GetReference();
     }
+
+    public string GetFullText()
+    {
+        return _fullText;
+    }
+
+    public Reference GetReferenceObject()
+    {
+        return _reference;
+    }
+
 
     private int NumberOfHiddenWords()
     {

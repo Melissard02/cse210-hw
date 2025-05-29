@@ -36,11 +36,6 @@ class Word
 
     public void DisplayWord()
     {
-        Console.Write(GetWordString() + ' ');
-    }
-
-    private int GetWordLength()
-    {
-        return _word.Length;
+        Console.Write(GetWordString() + " ");
     }
 }
