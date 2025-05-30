@@ -58,6 +58,7 @@ class Program
 
                 Console.WriteLine("\nPress Enter to hide more words or type 'quit' to exit");
                 string input = Console.ReadLine();
+                
 
                 if (input.ToLower() == "quit")
                 {
@@ -66,8 +67,16 @@ class Program
 
                 allHidden = scripture.HideSomeWords();
             }
-            Console.Clear();
-            scripture.ShowScripture();
+
+            if (scripture.IsCompletelyHidden())
+            {
+                Console.Clear();
+                scripture.UnhideWords();
+                scripture.ShowScripture();
+                Console.WriteLine("\nScripture memorization complete!");
+                Console.ReadLine();
+            }
+            
         }
     }
 }

@@ -61,6 +61,14 @@ class Scripture
         return NumberOfHiddenWords() == _words.Count;
     }
 
+    public void UnhideWords()
+    {
+        foreach (Word word in _words)
+        {
+            word.SetIsHidden(false);
+        }
+    }
+    
     public void ShowScripture()
     {
         _reference.ShowReference();
@@ -79,6 +87,11 @@ class Scripture
     public string GetFullText()
     {
         return _fullText;
+    }
+
+    public bool IsCompletelyHidden()
+    {
+        return NumberOfHiddenWords() == _words.Count;
     }
 
     public Reference GetReferenceObject()
