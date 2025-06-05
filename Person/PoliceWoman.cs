@@ -1,7 +1,14 @@
 class PoliceWoman : Person
 {
-    public PoliceWoman(string firstName, string lastName, int age) : base(firstName, lastName, age)
+    private string _weapons;
+
+    public PoliceWoman(string firstName, string lastName, int age, string weapons) : base(firstName, lastName, age)
     {
-        
+        _weapons = weapons;
+    }
+
+    public string GetPoliceWomanInformation()
+    {
+        return $"Weapons: {_weapons} :: {GetPersonInformation()}";
     }
 }
