@@ -1,4 +1,4 @@
-using System;
+//UsedString.cs
 
 class UsedString
 {
@@ -7,24 +7,22 @@ class UsedString
 
     public UsedString(string prompt, bool hidden)
     {
-        
+        _prompt = prompt;
+        _beenUsed = hidden;
     }
 
     public string GetPrompt()
     {
-
-
+        return _prompt;
     }
 
-    public string SetBeenUsed()
+    public void SetBeenUsed(bool value)
     {
-
+        _beenUsed = value;
     }
 
     public bool GetBeenUsed()
     {
-
+        return _beenUsed;
     }
 }
-
-
