@@ -23,11 +23,11 @@ class Program
                 EternalGoal eternalGoal = new EternalGoal();
                 eternalGoal.DisplayPrompt();
             }
-            // else if (choice == 3)
-            // {
-            //     var activity = new Reflection("Reflection", "Think about these questions.", 0);
-            //     activity.RunActivity();
-            // }
+            else if (choice == 3)
+            {
+                CheckListGoal checkListGoal = new CheckListGoal();
+                checkListGoal.DisplayPrompt();
+            }
             else if (choice == 4)
             {
                 running = false;
