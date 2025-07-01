@@ -2,7 +2,7 @@
 using System;
 public class SimpleGoal : Goal
 {
-    public SimpleGoal(string name, string description, int points) : base(name, description, points, false)
+    public SimpleGoal(string name, string description, int points, bool status) : base(name, description, points, false)
     {
         _goalType = "SimpleGoal";
     }

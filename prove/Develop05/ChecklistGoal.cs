@@ -7,12 +7,12 @@ public class CheckListGoal : Goal
     protected int _maxCompletions;
     protected int _bonusPoints;
 
-    public CheckListGoal(string name, string description, int points, int max, int bonus) : base(name, description, points, false)
+    public CheckListGoal(string name, string description, int points, bool status, int completions, int max, int bonus) : base(name, description, points, false)
     {
         _goalType = "ChecklistGoal";
         _maxCompletions = max;
         _bonusPoints = bonus;
-        _numberOfCompletions = 0;
+        _numberOfCompletions = completions;
     }
 
     public CheckListGoal()

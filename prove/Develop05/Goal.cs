@@ -18,7 +18,7 @@ public abstract class Goal
 
     public Goal()
     {
-
+        
     }
 
     public string GetName()
@@ -88,5 +88,49 @@ public abstract class Goal
 
     public abstract void RunGoal();
 
+    public virtual string Serialize()
+    {
+        return ToString();
+    }
+
+    public static Goal Deserialize(string line)
+{
+    string[] parts = line.Split('|');
+    string type = parts[0];
+
+    switch (type)
+    {
+        case "SimpleGoal":
+            return new SimpleGoal(
+                parts[1],
+                parts[2],
+                int.Parse(parts[3]),
+                bool.Parse(parts[4])
+            );
+
+        case "EternalGoal":
+            return new EternalGoal(
+                parts[1],
+                parts[2],
+                int.Parse(parts[3]),
+                bool.Parse(parts[4]),
+                int.Parse(parts[5])
+            );
+
+        case "ChecklistGoal":
+            return new CheckListGoal(
+                parts[1],
+                parts[2],
+                int.Parse(parts[3]),
+                bool.Parse(parts[4]),
+                int.Parse(parts[5]),
+                int.Parse(parts[6]),
+                int.Parse(parts[7])
+            );
+
+        default:
+            throw new Exception("Unknown goal type");
+    }
+}
 
 }

@@ -4,10 +4,10 @@ public class EternalGoal : Goal
 {
     protected int _numberOfCompletions;
 
-    public EternalGoal(string name, string description, int points) : base(name, description, points, false)
+    public EternalGoal(string name, string description, int points, bool status, int completions) : base(name, description, points, false)
     {
         _goalType = "EternalGoal";
-        _numberOfCompletions = 0;
+        _numberOfCompletions = completions;
     }
 
     public EternalGoal()
