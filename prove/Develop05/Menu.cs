@@ -1,36 +1,164 @@
-// Menu.cs
 using System;
 using System.Threading;
-
+using System.Collections.Generic;
 
 public class Menu
 {
+    private GoalManager _manager;
 
-    public int DisplayMenu()
+    public Menu(GoalManager manager)
+    {
+        _manager = manager;
+    }
+
+    public void ShowMain()
+    {
+        bool running = true;
+
+        while (running)
+        {
+            Console.Clear();
+            Console.WriteLine("=== Eternal Quest ===");
+            Console.WriteLine($"Score: {_manager.GetScore()}");
+            Console.WriteLine();
+            Console.WriteLine("1. Create New Goal");
+            Console.WriteLine("2. List Goals");
+            Console.WriteLine("3. Save Goals");
+            Console.WriteLine("4. Load Goals");
+            Console.WriteLine("5. Record Event (Complete a Goal)");
+            Console.WriteLine("6. Quit");
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+                    CreateGoal();
+                    break;
+                case "2":
+                    _manager.DisplayGoals();
+                    Pause();
+                    break;
+                case "3":
+                    Console.Write("Filename to save: ");
+                    string saveName = Console.ReadLine();
+                    _manager.SaveGoals(saveName);
+                    Console.WriteLine("Saved!");
+                    Pause();
+                    break;
+                case "4":
+                    Console.Write("Filename to load: ");
+                    string loadName = Console.ReadLine();
+                    _manager.LoadGoals(loadName);
+                    Console.WriteLine("Loaded!");
+                    Pause();
+                    break;
+                case "5":
+                    RecordEvent();
+                    break;
+                case "6":
+                    running = false;
+                    break;
+                default:
+                    Console.WriteLine("Bro, pick a number between 1 and 6 😎");
+                    Pause();
+                    break;
+            }
+        }
+    }
+
+    private void CreateGoal()
     {
         Console.Clear();
-        Console.WriteLine("Select an Goal Type");
+        Console.WriteLine("Select Goal Type:");
         Console.WriteLine("1. Simple Goal");
         Console.WriteLine("2. Eternal Goal");
         Console.WriteLine("3. Checklist Goal");
-        Console.WriteLine("4. Quit");
-
         Console.Write("> ");
+        string input = Console.ReadLine();
 
-        string userChoice = Console.ReadLine();
-
-        if (int.TryParse(userChoice, out int choice))
+        switch (input)
         {
-            if (choice >= 1 && choice <= 4)
-            {
-                return choice; // valid choice, exit loop
-            }
+            case "1":
+                CreateSimpleGoal();
+                break;
+            case "2":
+                CreateEternalGoal();
+                break;
+            case "3":
+                CreateChecklistGoal();
+                break;
+            default:
+                Console.WriteLine("Yo, that ain't it chief. Try 1–3.");
+                Pause();
+                break;
         }
-
-        Console.WriteLine("Oops! Please enter a number between 1 and 4.");
-        Thread.Sleep(1500);
-
-        return 0;
     }
 
+    private void CreateSimpleGoal()
+    {
+        Console.Write("Name: ");
+        string name = Console.ReadLine();
+        Console.Write("Description: ");
+        string desc = Console.ReadLine();
+        Console.Write("Points: ");
+        int points = int.Parse(Console.ReadLine());
+
+        _manager.AddGoal(new SimpleGoal(name, desc, points));
+        Console.WriteLine("Simple Goal added! 💪");
+        Pause();
+    }
+
+    private void CreateEternalGoal()
+    {
+        Console.Write("Name: ");
+        string name = Console.ReadLine();
+        Console.Write("Description: ");
+        string desc = Console.ReadLine();
+        Console.Write("Points per completion: ");
+        int points = int.Parse(Console.ReadLine());
+
+        _manager.AddGoal(new EternalGoal(name, desc, points));
+        Console.WriteLine("Eternal Goal added! 🔁");
+        Pause();
+    }
+
+    private void CreateChecklistGoal()
+    {
+        Console.Write("Name: ");
+        string name = Console.ReadLine();
+        Console.Write("Description: ");
+        string desc = Console.ReadLine();
+        Console.Write("Points per completion: ");
+        int points = int.Parse(Console.ReadLine());
+        Console.Write("Times needed to complete: ");
+        int target = int.Parse(Console.ReadLine());
+
+        _manager.AddGoal(new ChecklistGoal(name, desc, points, target));
+        Console.WriteLine("Checklist Goal added! 📋✅");
+        Pause();
+    }
+
+    private void RecordEvent()
+    {
+        Console.Clear();
+        _manager.DisplayGoals();
+        Console.Write("Which goal number did you complete? ");
+        if (int.TryParse(Console.ReadLine(), out int choice))
+        {
+            _manager.RecordEvent(choice - 1);
+        }
+        else
+        {
+            Console.WriteLine("Please input a correct number.");
+        }
+        Pause();
+    }
+
+    private void Pause()
+    {
+        Console.WriteLine("\nPress Enter to continue...");
+        Console.ReadLine();
+    }
 }
