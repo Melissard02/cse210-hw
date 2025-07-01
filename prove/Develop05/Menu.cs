@@ -1,4 +1,9 @@
-class Menu
+// Menu.cs
+using System;
+using System.Threading;
+
+
+public class Menu
 {
 
     public int DisplayMenu()
