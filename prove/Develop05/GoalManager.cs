@@ -1,0 +1,78 @@
+//GoalManager.cs
+
+class GoalManager
+{
+    public List<Goal> _goals;
+
+    public string _filename;
+
+    public int _totalScore;
+
+    public GoalManager()
+    {
+        _goals = new List<Goal>();
+        _totalScore = 0;
+    }
+
+    public void AddGoal(Goal goal)
+    {
+        _goals.Add(goal);
+    }
+
+    public void LoadGoal(string filename)
+    {
+        _goals.Clear();
+        string[] lines = File.ReadAllLines(filename);
+        _totalScore = int.Parse(lines[0]);
+        for (int i = 1; i < lines.Length; i++)
+        {
+            Goal goal = Goal.Deserialize(lines[i]);
+            _goals.Add(goal);
+        }
+    }
+
+    public void SaveGoals(string filename)
+    {
+        using (StreamWriter writer = new StreamWriter(filename))
+        {
+            writer.WriteLine(_totalScore);
+            foreach (Goal goal in _goals)
+            {
+                writer.WriteLine(goal.Serialize());
+            }
+        }
+    }
+
+    public void DisplayGoals()
+    {
+        for (int i = 0; i < _goals.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {_goals[i].ListGoal()}");
+        }
+    }
+
+    public void DisplayScore()
+    {
+        Console.WriteLine($"Total Score: {_totalScore}");
+    }
+
+    public void RecordEvent(int goalIndex)
+    {
+        if (goalIndex >= 0 && goalIndex < _goals.Count)
+        {
+            int earned = _goals[goalIndex].RecordEvent();
+            _totalScore += earned;
+            Console.WriteLine($"You earned {earned} points. Total points: {_totalScore}");
+        }
+        else
+        {
+            Console.WriteLine("Invalid goal number");
+        }
+    }
+
+    private string ObtainFileName(string prompt)
+    {
+        Console.Write(prompt);
+        return Console.ReadLine();
+    }
+}
