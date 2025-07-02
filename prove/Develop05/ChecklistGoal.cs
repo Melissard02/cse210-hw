@@ -5,13 +5,15 @@ public class ChecklistGoal : Goal
     protected int _numberOfCompletions;
     protected int _maxCompletions;
     protected int _bonusPoints;
-    public ChecklistGoal(string name, string description, int points, bool status, int completions, int max, int bonus) : base(name, description, points, false)
+    public ChecklistGoal(string name, string description, int points, bool status, int completions, int max, int bonus)
+    : base(name, description, points, status)
     {
         _goalType = "ChecklistGoal";
         _maxCompletions = max;
         _bonusPoints = bonus;
         _numberOfCompletions = completions;
     }
+
     public ChecklistGoal()
     {
         _goalType = "ChecklistGoal";
