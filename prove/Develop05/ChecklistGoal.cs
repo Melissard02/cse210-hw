@@ -39,7 +39,7 @@ public class ChecklistGoal : Goal
                 Console.WriteLine($"WOO! You finished the entire checklist and earned a BONUS of {_bonusPoints} points!");
             }
         }
-        Console.WriteLine($"Nice! You've completed {_name} {_numberOfCompletions}/{_maxCompletions} time(s). You earned {_numberofPoints} points!");
+        Console.WriteLine($"Nice! You've completed {_name} {_numberOfCompletions}/{_maxCompletions} time(s).");
         return totalPoints;
     }
     public override string ToString()

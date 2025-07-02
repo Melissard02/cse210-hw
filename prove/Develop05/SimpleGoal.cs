@@ -19,7 +19,7 @@ public class SimpleGoal : Goal
     {
         if (!_status)
         {
-            Console.WriteLine($"Congrats! You completed the goal: {_name} and earned {_numberofPoints} points");
+            Console.WriteLine($"Congrats! You completed the goal: {_name}");
             return MarkComplete();
         }
         else

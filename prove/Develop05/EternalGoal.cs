@@ -20,7 +20,7 @@ public class EternalGoal : Goal
     public override int RecordEvent()
     {
         _numberOfCompletions++;
-        Console.WriteLine($"Nice! You've done {_name} {_numberOfCompletions} time(s)! You earned {_numberofPoints} points!");
+        Console.WriteLine($"Nice! You've done {_name} {_numberOfCompletions} time(s)!");
         return _numberofPoints;
     }
     public override string ToString()

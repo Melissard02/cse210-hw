@@ -111,7 +111,7 @@ public class Menu
         Console.Write("Points per completion: ");
         int points = int.Parse(Console.ReadLine());
         bool status = false;
-        Console.Write("Completions: ");
+        Console.Write("Completions so far: ");
         int completions = int.Parse(Console.ReadLine());
         _manager.AddGoal(new EternalGoal(name, desc, points, status, completions));
         Console.WriteLine("Eternal Goal added!");
@@ -126,39 +126,34 @@ public class Menu
         string desc = Console.ReadLine();
 
         Console.Write("Points per completion: ");
-        int points = int.Parse(Console.ReadLine());
-        if (!int.TryParse(Console.ReadLine(), out _))
+        if (!int.TryParse(Console.ReadLine(), out int points))
         {
             Console.WriteLine("Invalid input, try again!");
             return;
         }
 
         Console.Write("Times needed to complete: ");
-        int target = int.Parse(Console.ReadLine());
-        if (!int.TryParse(Console.ReadLine(), out _))
+        if (!int.TryParse(Console.ReadLine(), out int target))
         {
             Console.WriteLine("Invalid input, try again!");
             return;
         }
 
-        Console.Write("Times completed: 0");
         int completions = 0;
-
-        // Set the status automatically to false
         bool status = false;
 
         Console.Write("Bonus points for completing every goal: ");
-        int bonus = int.Parse(Console.ReadLine());
-        if (!int.TryParse(Console.ReadLine(), out _))
+        if (!int.TryParse(Console.ReadLine(), out int bonus))
         {
             Console.WriteLine("Invalid input, try again!");
             return;
         }
-        
+
         _manager.AddGoal(new ChecklistGoal(name, desc, points, status, completions, target, bonus));
         Console.WriteLine("Checklist Goal added!");
         Pause();
     }
+
     private void RecordEvent()
     {
         Console.Clear();
