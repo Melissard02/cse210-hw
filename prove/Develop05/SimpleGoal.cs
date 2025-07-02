@@ -6,18 +6,15 @@ public class SimpleGoal : Goal
     {
         _goalType = "SimpleGoal";
     }
-
     public SimpleGoal()
     {
         _goalType = "SimpleGoal";
     }
-
     public override void RunGoal()
     {
         Console.WriteLine($"Simple Goal: {_name}");
         Console.WriteLine($"{_description}");
     }
-
     public override int RecordEvent()
     {
         if (!_status)
@@ -31,5 +28,4 @@ public class SimpleGoal : Goal
             return 0;
         }
     }
-
 }

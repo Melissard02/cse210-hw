@@ -1,25 +1,20 @@
 //GoalManager.cs
-
-class GoalManager
+using System.IO;
+public class GoalManager
 {
     public List<Goal> _goals;
-
     public string _filename;
-
     public int _totalScore;
-
     public GoalManager()
     {
         _goals = new List<Goal>();
         _totalScore = 0;
     }
-
     public void AddGoal(Goal goal)
     {
         _goals.Add(goal);
     }
-
-    public void LoadGoal(string filename)
+    public void LoadGoals(string filename)
     {
         _goals.Clear();
         string[] lines = File.ReadAllLines(filename);
@@ -30,7 +25,6 @@ class GoalManager
             _goals.Add(goal);
         }
     }
-
     public void SaveGoals(string filename)
     {
         using (StreamWriter writer = new StreamWriter(filename))
@@ -42,7 +36,6 @@ class GoalManager
             }
         }
     }
-
     public void DisplayGoals()
     {
         for (int i = 0; i < _goals.Count; i++)
@@ -50,12 +43,14 @@ class GoalManager
             Console.WriteLine($"{i + 1}. {_goals[i].ListGoal()}");
         }
     }
-
+    public int GetScore()
+    {
+        return _totalScore;
+    }
     public void DisplayScore()
     {
         Console.WriteLine($"Total Score: {_totalScore}");
     }
-
     public void RecordEvent(int goalIndex)
     {
         if (goalIndex >= 0 && goalIndex < _goals.Count)
@@ -68,11 +63,5 @@ class GoalManager
         {
             Console.WriteLine("Invalid goal number");
         }
-    }
-
-    private string ObtainFileName(string prompt)
-    {
-        Console.Write(prompt);
-        return Console.ReadLine();
     }
 }

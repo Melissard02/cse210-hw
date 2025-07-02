@@ -1,7 +1,7 @@
+// Menu.cs
 using System;
 using System.Threading;
 using System.Collections.Generic;
-
 public class Menu
 {
     private GoalManager _manager;
@@ -10,11 +10,9 @@ public class Menu
     {
         _manager = manager;
     }
-
     public void ShowMain()
     {
         bool running = true;
-
         while (running)
         {
             Console.Clear();
@@ -28,9 +26,7 @@ public class Menu
             Console.WriteLine("5. Record Event (Complete a Goal)");
             Console.WriteLine("6. Quit");
             Console.Write("> ");
-
             string input = Console.ReadLine();
-
             switch (input)
             {
                 case "1":
@@ -61,13 +57,12 @@ public class Menu
                     running = false;
                     break;
                 default:
-                    Console.WriteLine("Bro, pick a number between 1 and 6 😎");
+                    Console.WriteLine("Pick a number between 1 and 6");
                     Pause();
                     break;
             }
         }
     }
-
     private void CreateGoal()
     {
         Console.Clear();
@@ -77,7 +72,6 @@ public class Menu
         Console.WriteLine("3. Checklist Goal");
         Console.Write("> ");
         string input = Console.ReadLine();
-
         switch (input)
         {
             case "1":
@@ -90,12 +84,11 @@ public class Menu
                 CreateChecklistGoal();
                 break;
             default:
-                Console.WriteLine("Yo, that ain't it chief. Try 1–3.");
+                Console.WriteLine("Select a number 1 through 3");
                 Pause();
                 break;
         }
     }
-
     private void CreateSimpleGoal()
     {
         Console.Write("Name: ");
@@ -104,12 +97,11 @@ public class Menu
         string desc = Console.ReadLine();
         Console.Write("Points: ");
         int points = int.Parse(Console.ReadLine());
-
-        _manager.AddGoal(new SimpleGoal(name, desc, points));
-        Console.WriteLine("Simple Goal added! 💪");
+        bool status = false;
+        _manager.AddGoal(new SimpleGoal(name, desc, points, status));
+        Console.WriteLine("Simple Goal added!");
         Pause();
     }
-
     private void CreateEternalGoal()
     {
         Console.Write("Name: ");
@@ -118,12 +110,13 @@ public class Menu
         string desc = Console.ReadLine();
         Console.Write("Points per completion: ");
         int points = int.Parse(Console.ReadLine());
-
-        _manager.AddGoal(new EternalGoal(name, desc, points));
-        Console.WriteLine("Eternal Goal added! 🔁");
+        bool status = false;
+        Console.Write("Completions: ");
+        int completions = int.Parse(Console.ReadLine());
+        _manager.AddGoal(new EternalGoal(name, desc, points, status, completions));
+        Console.WriteLine("Eternal Goal added!");
         Pause();
     }
-
     private void CreateChecklistGoal()
     {
         Console.Write("Name: ");
@@ -134,12 +127,16 @@ public class Menu
         int points = int.Parse(Console.ReadLine());
         Console.Write("Times needed to complete: ");
         int target = int.Parse(Console.ReadLine());
-
-        _manager.AddGoal(new ChecklistGoal(name, desc, points, target));
-        Console.WriteLine("Checklist Goal added! 📋✅");
+        Console.Write("Times completed: 0");
+        int completions = 0;
+        // Set the status automatically to false
+        bool status = false;
+        Console.Write("Bonus points for completing every goal: ");
+        int bonus = int.Parse(Console.ReadLine());
+        _manager.AddGoal(new ChecklistGoal(name, desc, points, status, completions, target, bonus));
+        Console.WriteLine("Checklist Goal added!");
         Pause();
     }
-
     private void RecordEvent()
     {
         Console.Clear();
@@ -155,7 +152,6 @@ public class Menu
         }
         Pause();
     }
-
     private void Pause()
     {
         Console.WriteLine("\nPress Enter to continue...");
