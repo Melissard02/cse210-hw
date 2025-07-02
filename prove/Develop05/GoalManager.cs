@@ -64,7 +64,7 @@ public class GoalManager
             int earned = _goals[goalIndex].RecordEvent();
             _totalScore += earned;
             Console.WriteLine($"You earned {earned} points. Total points: {_totalScore}");
-            while (_totalScore > _levelScore)
+            while (_totalScore >= _levelScore)
             {
                 _level++;
                 _levelScore *= 1.5;
