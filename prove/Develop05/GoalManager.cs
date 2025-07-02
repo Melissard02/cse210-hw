@@ -1,5 +1,7 @@
 //GoalManager.cs
 using System.IO;
+using System;
+using System.Collections.Generic;
 public class GoalManager
 {
     public List<Goal> _goals;

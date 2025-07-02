@@ -121,18 +121,40 @@ public class Menu
     {
         Console.Write("Name: ");
         string name = Console.ReadLine();
+
         Console.Write("Description: ");
         string desc = Console.ReadLine();
+
         Console.Write("Points per completion: ");
         int points = int.Parse(Console.ReadLine());
+        if (!int.TryParse(Console.ReadLine(), out _))
+        {
+            Console.WriteLine("Invalid input, try again!");
+            return;
+        }
+
         Console.Write("Times needed to complete: ");
         int target = int.Parse(Console.ReadLine());
+        if (!int.TryParse(Console.ReadLine(), out _))
+        {
+            Console.WriteLine("Invalid input, try again!");
+            return;
+        }
+
         Console.Write("Times completed: 0");
         int completions = 0;
+
         // Set the status automatically to false
         bool status = false;
+
         Console.Write("Bonus points for completing every goal: ");
         int bonus = int.Parse(Console.ReadLine());
+        if (!int.TryParse(Console.ReadLine(), out _))
+        {
+            Console.WriteLine("Invalid input, try again!");
+            return;
+        }
+        
         _manager.AddGoal(new ChecklistGoal(name, desc, points, status, completions, target, bonus));
         Console.WriteLine("Checklist Goal added!");
         Pause();

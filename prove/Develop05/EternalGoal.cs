@@ -1,5 +1,4 @@
 // EternalGoal.cs
-
 public class EternalGoal : Goal
 {
     protected int _numberOfCompletions;
