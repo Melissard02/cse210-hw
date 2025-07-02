@@ -7,10 +7,14 @@ public class GoalManager
     public List<Goal> _goals;
     public string _filename;
     public int _totalScore;
+    private int _level;
+    private double _levelScore;
     public GoalManager()
     {
         _goals = new List<Goal>();
         _totalScore = 0;
+        _level = 1;
+        _levelScore = 100;
     }
     public void AddGoal(Goal goal)
     {
@@ -49,9 +53,9 @@ public class GoalManager
     {
         return _totalScore;
     }
-    public void DisplayScore()
+    public int GetLevel()
     {
-        Console.WriteLine($"Total Score: {_totalScore}");
+        return _level;
     }
     public void RecordEvent(int goalIndex)
     {
@@ -60,6 +64,12 @@ public class GoalManager
             int earned = _goals[goalIndex].RecordEvent();
             _totalScore += earned;
             Console.WriteLine($"You earned {earned} points. Total points: {_totalScore}");
+            while (_totalScore > _levelScore)
+            {
+                _level++;
+                _levelScore *= 1.5;
+            }
+            Console.WriteLine($"WOW! You leveled up! You are now level {_level}. Awesome Job :]");
         }
         else
         {

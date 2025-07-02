@@ -17,6 +17,7 @@ public class Menu
         {
             Console.Clear();
             Console.WriteLine("=== Eternal Quest ===");
+            Console.WriteLine($"Level: {_manager.GetLevel()}");
             Console.WriteLine($"Score: {_manager.GetScore()}");
             Console.WriteLine();
             Console.WriteLine("1. Create New Goal");
