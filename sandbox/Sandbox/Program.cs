@@ -9,43 +9,59 @@ class Program
     // }
 
 
+    static void TestByRef(int x, ref string n)
+    {
+        x++;
+        n += " Plus Betty";
+        Console.WriteLine($"In TestByRef: {x}, {n}");
+    }
 
 
+    static void TestByOut(out int a)
+    {
+        a = 10101010;
+        Console.WriteLine($"In TestByOut: {a}");
+    }
 
     static void Main(string[] args)
     {
         // Console.Write("Hello World");
 
-        int duration = 9;
-        DateTime currentTime = DateTime.Now;
-        DateTime endTime = currentTime.AddSeconds(10);
-        int sleepTime = 250;
+        int z = 10;
+        string name = "Bob";
 
-        int count = duration;
+        TestByRef(z, ref name);
 
-        string animationString = "(^_^)(-_-)";
+        Console.WriteLine($"In main: {z}, {name}");
 
+        // int duration = 9;
+        // DateTime currentTime = DateTime.Now;
+        // DateTime endTime = currentTime.AddSeconds(10);
+        // int sleepTime = 250;
 
-        while (DateTime.Now < endTime)
-        {
-            Console.Write(animationString[0..5]);
-            Thread.Sleep(sleepTime);
-            Console.Write("\b\b\b\b\b");
-            Console.Write(animationString[5..]);
-            Thread.Sleep(sleepTime);
-            Console.Write("\b\b\b\b\b");
+        // int count = duration;
 
-            // Console.Write(count--);
-            // Thread.Sleep(1000);
-            // Console.Write("\b");
-            
-            // Console.Write("+");
-            // Thread.Sleep(sleepTime);
-            // Console.Write("\b");
-            // Console.Write("-");
-        }
+        // string animationString = "(^_^)(-_-)";
 
 
+        // while (DateTime.Now < endTime)
+        // {
+        //     Console.Write(animationString[0..5]);
+        //     Thread.Sleep(sleepTime);
+        //     Console.Write("\b\b\b\b\b");
+        //     Console.Write(animationString[5..]);
+        //     Thread.Sleep(sleepTime);
+        //     Console.Write("\b\b\b\b\b");
+
+        // Console.Write(count--);
+        // Thread.Sleep(1000);
+        // Console.Write("\b");
+
+        // Console.Write("+");
+        // Thread.Sleep(sleepTime);
+        // Console.Write("\b");
+        // Console.Write("-");
+    }
         // Circle myCircle = new Circle(10);
         //myCircle.SetRadius(10);
         // Console.WriteLine($"{myCircle.GetRadius()}");
@@ -95,5 +111,5 @@ class Program
 
 
             // } while(!done);
-    }
+    // }
 }
