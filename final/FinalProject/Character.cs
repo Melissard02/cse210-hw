@@ -10,7 +10,7 @@ public abstract class Character
     protected int _exp;
     protected int _level;
 
-    public Character(string name, string weapon, int health, int attack, int defense, int threshold)
+    public Character(string name, string weapon, int health, int attack, int defense, int threshold, int exp, int level)
     {
         _name = name;
         _weapon = weapon;
@@ -18,8 +18,8 @@ public abstract class Character
         _attack = attack;
         _defense = defense;
         _expThreshold = threshold;
-        _exp = 0;
-        _level = 1;
+        _exp = exp;
+        _level = level;
     }
 
     public Character() { }
@@ -50,10 +50,7 @@ public abstract class Character
     public void SetLevel(int level) => _level = level;
 
     // Combat methods for Polymorphism
-    public virtual int CalculateAttack()
-    {
-        return _attack;
-    }
+    public virtual int CalculateAttack() => _attack;
 
     public virtual void TakeDamage(int damage)
     {
@@ -61,16 +58,15 @@ public abstract class Character
         if (_health < 0) _health = 0;
     }
 
+    public abstract void GainExp(int amount);
+
     // Serialization
     public override string ToString()
     {
         return $"{GetType().Name}|{_name}|{_weapon}|{_health}|{_attack}|{_defense}|{_expThreshold}|{_exp}|{_level}";
     }
 
-    public virtual string Serialize()
-    {
-        return ToString();
-    }
+    public virtual string Serialize() => ToString();
 
     public static Character Deserialize(string line)
     {

@@ -52,12 +52,14 @@ public class Menu
                     break;
                 case "3":
                     // TODO: implement Save
-                    Console.WriteLine("Saving is not implemented yet.");
+                    SaveGame();
+                    Console.WriteLine("Saved game!");
                     Pause();
                     break;
                 case "4":
                     // TODO: implement Load
-                    Console.WriteLine("Loading is not implemented yet.");
+                    LoadGame();
+                    Console.WriteLine("Game Loaded!");
                     Pause();
                     break;
                 case "5":
@@ -114,6 +116,16 @@ public class Menu
 
         Console.WriteLine($"Welcome, {name} the {_character.GetType().Name}!");
         Pause();
+    }
+
+    private void SaveGame()
+    {
+        //Todo
+    }
+
+    private void LoadGame()
+    {
+        //Todo
     }
 
     private void Pause()
