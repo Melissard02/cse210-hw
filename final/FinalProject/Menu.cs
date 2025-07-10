@@ -1,6 +1,7 @@
 //Menu.cs
 using System;
 using System.Threading;
+using System.IO;
 
 public class Menu
 {
@@ -51,14 +52,16 @@ public class Menu
                     Pause();
                     break;
                 case "3":
-                    // TODO: implement Save
-                    SaveGame();
+                    Console.Write("Name your save file: ");
+                    string saveName = Console.ReadLine();
+                    SaveGame(saveName);
                     Console.WriteLine("Saved game!");
                     Pause();
                     break;
                 case "4":
-                    // TODO: implement Load
-                    LoadGame();
+                    Console.Write("Name of Save File: ");
+                    string loadName = Console.ReadLine();
+                    LoadGame(loadName);
                     Console.WriteLine("Game Loaded!");
                     Pause();
                     break;
@@ -87,7 +90,7 @@ public class Menu
         Console.Write("Name your character: ");
         string name = Console.ReadLine();
 
-        // You can change these later to let the user customize them
+        // Change these later to let the user customize them
         int health = 100;
         int attack = 10;
         int defense = 5;
@@ -118,15 +121,56 @@ public class Menu
         Pause();
     }
 
-    private void SaveGame()
+    private void SaveGame(string filename)
     {
-        //Todo
+        if (!filename.EndsWith(".txt"))
+        {
+            filename += ".txt";
+        }
+
+        if (_character == null)
+        {
+            Console.WriteLine("No character to save!");
+            return;
+        }
+
+        using (StreamWriter writer = new StreamWriter(filename))
+        {
+            writer.WriteLine(_character.Serialize());
+        }
     }
 
-    private void LoadGame()
+    private void LoadGame(string filename)
     {
-        //Todo
+        if (!filename.EndsWith(".txt"))
+        {
+            filename += ".txt";
+        }
+
+        if (!File.Exists(filename))
+        {
+            Console.WriteLine("Save file does not exist!");
+            return;
+        }
+
+        string line = File.ReadAllText(filename).Trim();
+        if (string.IsNullOrEmpty(line))
+        {
+            Console.WriteLine("Save file is empty!");
+            return;
+        }
+
+        try
+        {
+            _character = Character.Deserialize(line);
+            Console.WriteLine($"Loaded character: {_character.GetName()} the {_character.GetType().Name}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading character: {ex.Message}");
+        }
     }
+
 
     private void Pause()
     {
