@@ -26,10 +26,4 @@ public class Wizard : Character
         _health += 13;
         _expThreshold = (int)(_expThreshold * 1.2);
     }
-
-
-    public override string Serialize()
-    {
-        return base.Serialize();
-    }
 }

@@ -40,9 +40,4 @@ public class Warrior : Character
         return _attack;
     }
 
-    public override string Serialize()
-    {
-        return base.Serialize();
-    }
-
 }

@@ -27,10 +27,4 @@ public class Archer : Character
         _expThreshold = (int)(_expThreshold * 1.2);
     }
 
-
-    public override string Serialize()
-    {
-        return base.Serialize();
-    }
-
 }
