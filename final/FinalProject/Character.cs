@@ -71,40 +71,25 @@ public abstract class Character
     public static Character Deserialize(string line)
     {
         string[] parts = line.Split('|');
+        if (parts.Length != 9)
+            throw new Exception("Invalid save data format.");
+
         string type = parts[0];
 
-        switch (type)
+        int health = int.Parse(parts[3]);
+        int attack = int.Parse(parts[4]);
+        int defense = int.Parse(parts[5]);
+        int threshold = int.Parse(parts[6]);
+        int exp = int.Parse(parts[7]);
+        int level = int.Parse(parts[8]);
+
+        return type switch
         {
-            case "Wizard":
-                return new Wizard(
-                    parts[1], parts[2],
-                    int.Parse(parts[3]), int.Parse(parts[4]),
-                    int.Parse(parts[5]), int.Parse(parts[6]),
-                    int.Parse(parts[7]), int.Parse(parts[8])
-                );
-            case "Archer":
-                return new Archer(
-                    parts[1], parts[2],
-                    int.Parse(parts[3]), int.Parse(parts[4]),
-                    int.Parse(parts[5]), int.Parse(parts[6]),
-                    int.Parse(parts[7]), int.Parse(parts[8])
-                );
-            case "Warrior":
-                return new Warrior(
-                    parts[1], parts[2],
-                    int.Parse(parts[3]), int.Parse(parts[4]),
-                    int.Parse(parts[5]), int.Parse(parts[6]),
-                    int.Parse(parts[7]), int.Parse(parts[8])
-                );
-            case "Rogue":
-                return new Rogue(
-                    parts[1], parts[2],
-                    int.Parse(parts[3]), int.Parse(parts[4]),
-                    int.Parse(parts[5]), int.Parse(parts[6]),
-                    int.Parse(parts[7]), int.Parse(parts[8])
-                );
-            default:
-                throw new Exception("Unknown character type");
-        }
+            "Wizard" => new Wizard(parts[1], parts[2], health, attack, defense, threshold, exp, level),
+            "Archer" => new Archer(parts[1], parts[2], health, attack, defense, threshold, exp, level),
+            "Warrior" => new Warrior(parts[1], parts[2], health, attack, defense, threshold, exp, level),
+            "Rogue" => new Rogue(parts[1], parts[2], health, attack, defense, threshold, exp, level),
+            _ => throw new Exception("Unknown character type")
+        };
     }
 }
