@@ -29,5 +29,20 @@ public class Enemy
     public void SetGiveExp(int giveExp) => _giveExp = giveExp;
 
 
-    
+    public void TakeDamage(int damage)
+    {
+        _health -= damage;
+        if (_health < 0) _health = 0;
+    }
+
+    public bool IsDead()
+    {
+        return _health <= 0;
+    }
+
+    public override string ToString()
+    {
+        return $"Enemy with {_health} HP, {_attack} ATK, {_defense} DEF, Weapon: {_weapon}";
+    }
+
 }
