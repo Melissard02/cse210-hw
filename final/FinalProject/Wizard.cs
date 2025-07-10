@@ -8,6 +8,28 @@ public class Wizard : Character
 
     public override void GainExp(int amount)
     {
-        //Implement level up logic
+        _exp += amount;
+        while (_exp >= _expThreshold)
+        {
+            _exp -= _expThreshold;
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        _level++;
+        Console.WriteLine($"{_name} leveled to level {_level}.");
+
+        _attack += 4;
+        _defense += 3;
+        _health += 13;
+        _expThreshold = (int)(_expThreshold * 1.2);
+    }
+
+
+    public override string Serialize()
+    {
+        return base.Serialize();
     }
 }
