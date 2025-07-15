@@ -2,17 +2,15 @@
 using System;
 using System.Threading;
 using System.IO;
-
 public class Menu
 {
     private Character _character;
-
     public void ShowMain()
     {
         bool running = true;
         while (running)
         {
-            Console.Clear();
+            // Console.Clear();
             Console.WriteLine("=== RPG BATTLE SIM ===");
 
             if (_character != null)
@@ -75,10 +73,9 @@ public class Menu
             }
         }
     }
-
     private void CreateCharacter()
     {
-        Console.Clear();
+        // Console.Clear();
         Console.WriteLine("Select Character Type:");
         Console.WriteLine("1. Wizard");
         Console.WriteLine("2. Archer");
@@ -90,28 +87,19 @@ public class Menu
         Console.Write("Name your character: ");
         string name = Console.ReadLine();
 
-        // Change these later to let the user customize them
-        int health = 100;
-        int attack = 10;
-        int defense = 5;
-        int threshold = 50;
-        string weapon = "Basic Sword";
-        int exp = 0;
-        int level = 1;
-
         switch (input)
         {
             case "1":
-                _character = new Wizard(name, weapon, health, attack, defense, threshold, exp, level);
+                _character = new Wizard(name);
                 break;
             case "2":
-                _character = new Archer(name, weapon, health, attack, defense, threshold, exp, level);
+                _character = new Archer(name);
                 break;
             case "3":
-                _character = new Warrior(name, weapon, health, attack, defense, threshold, exp, level);
+                _character = new Warrior(name);
                 break;
             case "4":
-                _character = new Rogue(name, weapon, health, attack, defense, threshold, exp, level);
+                _character = new Rogue(name);
                 break;
             default:
                 Console.WriteLine("Select a number 1 through 4");
@@ -120,6 +108,8 @@ public class Menu
         }
 
         Console.WriteLine($"Welcome, {name} the {_character.GetType().Name}!");
+        //Debug line
+        Console.WriteLine($"Debug: ExpThreshold {_character.GetThreshold()}");
         Pause();
     }
 
@@ -166,6 +156,8 @@ public class Menu
         {
             _character = Character.Deserialize(line);
             Console.WriteLine($"Loaded character: {_character.GetName()} the {_character.GetType().Name}");
+            //Debug Line
+            Console.WriteLine($"Test line expThreshold of {_character.GetThreshold()}");
         }
         catch (Exception ex)
         {

@@ -1,29 +1,5 @@
 // Rogue.cs
-
 public class Rogue : Character
 {
-    public Rogue(string name, string weapon, int health, int attack, int defense, int threshold, int exp, int level = 1) : base(name, weapon, health, attack, defense, threshold, exp, level) { }
-
-    protected int LevelExp;
-
-    public override void GainExp(int amount)
-    {
-        _exp += amount;
-        while (_exp >= _expThreshold)
-        {
-            _exp -= _expThreshold;
-            LevelUp();
-        }
-    }
-
-    private void LevelUp()
-    {
-        _level++;
-        Console.WriteLine($"{_name} leveled to level {_level}.");
-
-        _attack += 2;
-        _defense += 2;
-        _health += 17;
-        _expThreshold = (int)(_expThreshold * 1.2);
-    }
+    public Rogue(string name) : base(name, "Dagger", 85, 16, 2, 50, 0, 1) {}
 }

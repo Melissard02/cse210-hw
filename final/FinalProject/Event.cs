@@ -15,7 +15,7 @@ public class Event
     }
     public void StartBattle(Character player)
     {
-        Console.Clear();
+        // Console.Clear();
         Console.WriteLine("Enemy Encounter!");
        
         Enemy enemy = GenEnemy();
@@ -50,18 +50,24 @@ public class Event
     }
     private void PlayerTurn(Character player, Enemy enemy)
     {
+        // Console.Clear();
         Console.WriteLine("Player Turn");
         int damage = Math.Max(player.CalculateAttack() - enemy.GetDefense(), 1);
         Console.WriteLine($"Enemy takes {damage} damage!");
         enemy.TakeDamage(damage);
         Console.WriteLine($"Enemy Health: {enemy.GetHealth()}.\n");
+        Console.WriteLine("Press Enter to Continue...");
+        Console.ReadLine();
     }
     private void EnemyTurn(Character player, Enemy enemy)
     {
+        // Console.Clear();
         Console.WriteLine("Enemy Turn");
         int damage = Math.Max(enemy.GetAttack() - player.GetDefense(), 1);
         Console.WriteLine($"{player.GetName()} takes {damage} damage!");
         player.TakeDamage(damage);
         Console.WriteLine($"{player.GetName()} Health: {player.GetHealth()}");
+        Console.WriteLine("Press enter to continue...");
+        Console.ReadLine();
     }
 }

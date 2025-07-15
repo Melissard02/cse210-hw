@@ -8,6 +8,7 @@ public abstract class Character
     protected int _defense;
     protected int _expThreshold;
     protected int _exp;
+    protected int _totalExp;
     protected int _level;
 
     public Character(string name, string weapon, int health, int attack, int defense, int threshold, int exp, int level)
@@ -58,7 +59,30 @@ public abstract class Character
         if (_health < 0) _health = 0;
     }
 
-    public abstract void GainExp(int amount);
+    public void GainExp(int amount)
+    {
+        _exp += amount;
+        Console.WriteLine($"{_name} gained {_exp} EXP. LEVEL {_level}: {_exp}/{_expThreshold}");
+        bool leveledUp = false;
+        while (_exp >= _expThreshold)
+        {
+            _exp -= _expThreshold;
+            _level++;
+            _expThreshold = (int)(_expThreshold * 1.5);
+            leveledUp = true;
+            //Debug lines
+            Console.WriteLine("Hello from the exp while loop");
+            Console.WriteLine($"Level: {_level}");
+            Console.WriteLine($"Threshold: {_expThreshold}");
+            Console.WriteLine($"Bool {leveledUp}");
+            Console.ReadLine();
+        }
+
+        if (leveledUp)
+        {
+            Console.WriteLine($"{_name} the {GetType().Name} leveled up! LEVEL {_level}: {_exp}/{_expThreshold}");
+        }
+    }
 
     // Serialization
     public override string ToString()
@@ -75,6 +99,8 @@ public abstract class Character
             throw new Exception("Invalid save data format.");
 
         string type = parts[0];
+        string name = parts[1];
+        string weapon = parts[2];
 
         int health = int.Parse(parts[3]);
         int attack = int.Parse(parts[4]);
@@ -83,13 +109,25 @@ public abstract class Character
         int exp = int.Parse(parts[7]);
         int level = int.Parse(parts[8]);
 
-        return type switch
+        Character character = type switch
         {
-            "Wizard" => new Wizard(parts[1], parts[2], health, attack, defense, threshold, exp, level),
-            "Archer" => new Archer(parts[1], parts[2], health, attack, defense, threshold, exp, level),
-            "Warrior" => new Warrior(parts[1], parts[2], health, attack, defense, threshold, exp, level),
-            "Rogue" => new Rogue(parts[1], parts[2], health, attack, defense, threshold, exp, level),
+            "Wizard" => new Wizard(name),
+            "Archer" => new Archer(name),
+            "Warrior" => new Warrior(name),
+            "Rogue" => new Rogue(name),
             _ => throw new Exception("Unknown character type")
         };
+
+        // Overwrite stats with saved data
+        character._weapon = weapon;
+        character._health = health;
+        character._attack = attack;
+        character._defense = defense;
+        character._expThreshold = threshold;
+        character._exp = exp;
+        character._level = level;
+
+        return character;
     }
+
 }
