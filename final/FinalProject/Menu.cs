@@ -10,7 +10,7 @@ public class Menu
         bool running = true;
         while (running)
         {
-            // Console.Clear();
+            Console.Clear();
             Console.WriteLine("=== RPG BATTLE SIM ===");
 
             if (_character != null)
