@@ -4,7 +4,7 @@ public class Warrior : Character
 {
     protected int LevelExp;
 
-    public Warrior(string name, string weapon, int health, int attack, int defense, int threshold, int exp = 0, int level = 1) : base(name, weapon, health, attack, defense, threshold, exp, level) { }
+    public Warrior(string name, string weapon, int health, int attack, int defense, int threshold, int exp, int level = 1) : base(name, weapon, health, attack, defense, threshold, exp, level) { }
 
 
 

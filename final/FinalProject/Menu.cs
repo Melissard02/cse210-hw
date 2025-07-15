@@ -94,22 +94,24 @@ public class Menu
         int health = 100;
         int attack = 10;
         int defense = 5;
+        int threshold = 50;
         string weapon = "Basic Sword";
         int exp = 0;
+        int level = 1;
 
         switch (input)
         {
             case "1":
-                _character = new Wizard(name, weapon, health, attack, defense, exp);
+                _character = new Wizard(name, weapon, health, attack, defense, threshold, exp, level);
                 break;
             case "2":
-                _character = new Archer(name, weapon, health, attack, defense, exp);
+                _character = new Archer(name, weapon, health, attack, defense, threshold, exp, level);
                 break;
             case "3":
-                _character = new Warrior(name, weapon, health, attack, defense, exp);
+                _character = new Warrior(name, weapon, health, attack, defense, threshold, exp, level);
                 break;
             case "4":
-                _character = new Rogue(name, weapon, health, attack, defense, exp);
+                _character = new Rogue(name, weapon, health, attack, defense, threshold, exp, level);
                 break;
             default:
                 Console.WriteLine("Select a number 1 through 4");
@@ -170,8 +172,6 @@ public class Menu
             Console.WriteLine($"Error loading character: {ex.Message}");
         }
     }
-
-
     private void Pause()
     {
         Console.WriteLine("\nPress Enter to continue...");

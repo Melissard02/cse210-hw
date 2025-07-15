@@ -2,7 +2,7 @@
 
 public class Archer : Character
 {
-    public Archer(string name, string weapon, int health, int attack, int defense, int threshold, int exp = 0, int level = 1) : base(name, weapon, health, attack, defense, threshold, exp, level) { }
+    public Archer(string name, string weapon, int health, int attack, int defense, int threshold, int exp, int level = 1) : base(name, weapon, health, attack, defense, threshold, exp, level) { }
 
     protected int LevelExp;
 
