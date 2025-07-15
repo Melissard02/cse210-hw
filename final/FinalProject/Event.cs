@@ -1,6 +1,5 @@
 //Event.cs
 using System;
-
 public class Event
 {
     private Random _rand = new Random();
@@ -14,15 +13,13 @@ public class Event
 
         return new Enemy(health, defense, attack, weapon, giveExp);
     }
-
     public void StartBattle(Character player)
     {
         Console.Clear();
         Console.WriteLine("Enemy Encounter!");
-
+       
         Enemy enemy = GenEnemy();
         EnemyStats(enemy);
-
         while (player.GetHealth() > 0 && enemy.GetHealth() > 0)
         {
             PlayerTurn(player, enemy);
@@ -41,25 +38,30 @@ public class Event
             }
         }
     }
-
     private void EnemyStats(Enemy enemy)
     {
         // Console.Clear();
         Console.WriteLine("Enemy Stats:");
         Console.WriteLine($"Health: {enemy.GetHealth()}");
         Console.WriteLine($"Defense: {enemy.GetDefense()}");
-        Console.WriteLine($"Attack: {enemy.GetAttack}");
-        Console.WriteLine($"Weapon: {enemy.GetWeapon}");
+        Console.WriteLine($"Attack: {enemy.GetAttack()}");
+        Console.WriteLine($"Weapon: {enemy.GetWeapon()}");
         Console.WriteLine();
     }
-
     private void PlayerTurn(Character player, Enemy enemy)
     {
-
+        Console.WriteLine("Player Turn");
+        int damage = Math.Max(player.CalculateAttack() - enemy.GetDefense(), 1);
+        Console.WriteLine($"Enemy takes {damage} damage!");
+        enemy.TakeDamage(damage);
+        Console.WriteLine($"Enemy Health: {enemy.GetHealth()}.\n");
     }
-
     private void EnemyTurn(Character player, Enemy enemy)
     {
-
+        Console.WriteLine("Enemy Turn");
+        int damage = Math.Max(enemy.GetAttack() - player.GetDefense(), 1);
+        Console.WriteLine($"{player.GetName()} takes {damage} damage!");
+        player.TakeDamage(damage);
+        Console.WriteLine($"{player.GetName()} Health: {player.GetHealth()}");
     }
 }
