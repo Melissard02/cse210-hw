@@ -33,7 +33,7 @@ public class Event
 
             if (player.GetHealth() <= 0)
             {
-                Console.WriteLine("You have fallen in battle. Game Over.");
+                Console.WriteLine($"{player.GetName()} has fallen in battle. Game Over.");
                 // player.Heal(player.GetMaxHealth());
                 Console.WriteLine($"{player.GetName()} has recovered at the inn! Full HP restored.");
                 break;
@@ -46,12 +46,11 @@ public class Event
         Console.WriteLine("=== RPG BATTLE SIM ==="); ;
         Console.WriteLine($"Character: {player.GetName()}");
         Console.WriteLine($"Level: {player.GetLevel()}");
-        Console.WriteLine($"Health: {player.GetHealth}");
+        Console.WriteLine($"Health: {player.GetHealth()}");
         Console.WriteLine();
     }
     private void EnemyStats(Enemy enemy)
     {
-        Console.WriteLine();
         Console.WriteLine("Enemy Stats:");
         Console.WriteLine($"Health: {enemy.GetHealth()}");
         Console.WriteLine($"Defense: {enemy.GetDefense()}");
@@ -61,9 +60,9 @@ public class Event
     }
     private void PlayerTurn(Character player, Enemy enemy)
     {
-        Console.WriteLine("Player Turn\n");
+        Console.WriteLine("--Player Turn--");
         int damage = Math.Max(player.CalculateAttack() - enemy.GetDefense(), 1);
-        Console.WriteLine($"Enemy takes {damage} damage!");
+        Console.WriteLine($"{player.GetName()} deals {damage} damage!");
         enemy.TakeDamage(damage);
         Console.WriteLine($"Enemy Health: {enemy.GetHealth()}.\n");
         Console.WriteLine("Press Enter to Continue...");
@@ -71,7 +70,7 @@ public class Event
     }
     private void EnemyTurn(Character player, Enemy enemy)
     {
-        Console.WriteLine("Enemy Turn\n");
+        Console.WriteLine("--Enemy Turn--");
         int damage = Math.Max(enemy.GetAttack() - player.GetDefense(), 1);
         Console.WriteLine($"{player.GetName()} takes {damage} damage!");
         player.TakeDamage(damage);
