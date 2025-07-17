@@ -78,10 +78,10 @@ public abstract class Character
             _level++;
             _expThreshold = (int)(_expThreshold * 1.5);
             _exp = 0;
-            _maxHealth = +15;
+            _maxHealth += 15;
             _health = _maxHealth;
-            _defense = +3;
-            _attack = +2;
+            _defense += 3;
+            _attack += 2;
             leveledUp = true;
         }
 
@@ -108,7 +108,7 @@ public abstract class Character
     public static Character Deserialize(string line)
     {
         string[] parts = line.Split('|');
-        if (parts.Length != 9)
+        if (parts.Length != 10)
             throw new Exception("Invalid save data format.");
 
         string type = parts[0];

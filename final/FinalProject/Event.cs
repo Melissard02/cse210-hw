@@ -40,7 +40,12 @@ public class Event
         EnemyStats(enemy);
         while (player.GetHealth() > 0 && enemy.GetHealth() > 0)
         {
-            PlayerTurn(player, enemy);
+            if (!PlayerTurn(player, enemy))
+            {
+                Console.WriteLine($"{player.GetName()} escaped the battle safely!");
+                Pause();
+                break;
+            }
             if (IsEnemyDead(enemy))
             {
                 Console.WriteLine($"{player.GetName()} defeated the enemy! Earned {enemy.GetGiveExp()} EXP.");
@@ -76,7 +81,7 @@ public class Event
         Console.WriteLine($"Weapon: {enemy.GetWeapon()}");
         Console.WriteLine();
     }
-    private void PlayerTurn(Character player, Enemy enemy)
+    private bool PlayerTurn(Character player, Enemy enemy)
     {
         BattleScreen(player);
         Console.WriteLine("--Player Turn--");
@@ -87,26 +92,24 @@ public class Event
             case "1":
                 Attack(player, enemy);
                 Pause();
-                break;
+                return true;
             case "2":
                 Heal(player);
                 Pause();
-                break;
+                return true;
             case "3":
-                Console.WriteLine($"{player.GetName()} ran away from the enemy.");
-                Pause();
-                break;
+                return false;
             case "4":
                 Console.Clear();
                 BattleScreen(player);
                 Console.WriteLine();
                 EnemyStats(enemy);
                 Pause();
-                break;
+                return true;
             default:
                 Console.WriteLine("Choose option 1-4");
                 Pause();
-                break;
+                return true;
         }
     }
     private void EnemyTurn(Character player, Enemy enemy)
@@ -121,12 +124,12 @@ public class Event
     }
     private void BattleMenu()
     {
-        Console.Write("Choose your Action:");
+        Console.WriteLine("Choose your Action:");
         Console.WriteLine("1. Attack");
         Console.WriteLine("2. Heal");
         Console.WriteLine("3. Run");
         Console.WriteLine("4. View Enemy Stats (takes turn) \n");
-        Console.WriteLine(">");
+        Console.Write(">");
     }
     private void Pause()
     {
