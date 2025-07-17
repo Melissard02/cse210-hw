@@ -75,7 +75,9 @@ public class Menu
     }
     private void CreateCharacter()
     {
-        // Console.Clear();
+        Console.Clear();
+        Console.WriteLine("=== RPG BATTLE SIM ===");
+        Console.WriteLine();
         Console.WriteLine("Select Character Type:");
         Console.WriteLine("1. Wizard");
         Console.WriteLine("2. Archer");
@@ -84,6 +86,7 @@ public class Menu
         Console.Write("> ");
         string input = Console.ReadLine();
 
+        Console.WriteLine();
         Console.Write("Name your character: ");
         string name = Console.ReadLine();
 
@@ -106,10 +109,11 @@ public class Menu
                 Pause();
                 return;
         }
-
+        Console.Clear();
+        Console.WriteLine("=== RPG BATTLE SIM ===");
+        Console.WriteLine();
         Console.WriteLine($"Welcome, {name} the {_character.GetType().Name}!");
-        //Debug line
-        Console.WriteLine($"Debug: ExpThreshold {_character.GetThreshold()}");
+        Console.WriteLine();
         Pause();
     }
 
@@ -156,8 +160,6 @@ public class Menu
         {
             _character = Character.Deserialize(line);
             Console.WriteLine($"Loaded character: {_character.GetName()} the {_character.GetType().Name}");
-            //Debug Line
-            Console.WriteLine($"Test line expThreshold of {_character.GetThreshold()}");
         }
         catch (Exception ex)
         {

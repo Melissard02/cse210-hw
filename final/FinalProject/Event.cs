@@ -3,6 +3,7 @@ using System;
 public class Event
 {
     private Random _rand = new Random();
+    public bool _dead;
     private Enemy GenEnemy()
     {
         int health = _rand.Next(30, 61);
@@ -13,6 +14,24 @@ public class Event
 
         return new Enemy(health, defense, attack, weapon, giveExp);
     }
+    public bool IsPlayerDead(Character player)
+    {
+        if (player.GetHealth() <= 0)
+        {
+            _dead = true;
+            return true;
+        }
+        return false;
+    }
+    public bool IsEnemyDead(Enemy enemy)
+    {
+        if (enemy.GetHealth() <= 0)
+        {
+            _dead = true;
+            return true;
+        }
+        return false;
+    }
     public void StartBattle(Character player)
     {
         BattleScreen(player);
@@ -22,19 +41,18 @@ public class Event
         while (player.GetHealth() > 0 && enemy.GetHealth() > 0)
         {
             PlayerTurn(player, enemy);
-            EnemyTurn(player, enemy);
-            if (enemy.GetHealth() <= 0)
+            if (IsEnemyDead(enemy))
             {
-                Console.WriteLine($"You defeated the enemy! You earned {enemy.GetGiveExp()} EXP.");
+                Console.WriteLine($"{player.GetName()} defeated the enemy! Earned {enemy.GetGiveExp()} EXP.");
                 player.GainExp(enemy.GetGiveExp());
                 break;
             }
 
-
-            if (player.GetHealth() <= 0)
+            EnemyTurn(player, enemy);
+            if (IsPlayerDead(player))
             {
                 Console.WriteLine($"{player.GetName()} has fallen in battle. Game Over.");
-                // player.Heal(player.GetMaxHealth());
+                Heal(player);
                 Console.WriteLine($"{player.GetName()} has recovered at the inn! Full HP restored.");
                 break;
             }
@@ -60,23 +78,72 @@ public class Event
     }
     private void PlayerTurn(Character player, Enemy enemy)
     {
+        BattleScreen(player);
         Console.WriteLine("--Player Turn--");
-        int damage = Math.Max(player.CalculateAttack() - enemy.GetDefense(), 1);
-        Console.WriteLine($"{player.GetName()} deals {damage} damage!");
-        enemy.TakeDamage(damage);
-        Console.WriteLine($"Enemy Health: {enemy.GetHealth()}.\n");
-        Console.WriteLine("Press Enter to Continue...");
-        Console.ReadLine();
+        BattleMenu();
+        string input = Console.ReadLine();
+        switch (input)
+        {
+            case "1":
+                Attack(player, enemy);
+                Pause();
+                break;
+            case "2":
+                Heal(player);
+                Pause();
+                break;
+            case "3":
+                Console.WriteLine($"{player.GetName()} ran away from the enemy.");
+                Pause();
+                break;
+            case "4":
+                Console.Clear();
+                BattleScreen(player);
+                Console.WriteLine();
+                EnemyStats(enemy);
+                Pause();
+                break;
+            default:
+                Console.WriteLine("Choose option 1-4");
+                Pause();
+                break;
+        }
     }
     private void EnemyTurn(Character player, Enemy enemy)
     {
+        BattleScreen(player);
         Console.WriteLine("--Enemy Turn--");
         int damage = Math.Max(enemy.GetAttack() - player.GetDefense(), 1);
-        Console.WriteLine($"{player.GetName()} takes {damage} damage!");
+        Console.WriteLine($"Enemy dealt {damage} damage!");
         player.TakeDamage(damage);
-        Console.WriteLine($"{player.GetName()} Health: {player.GetHealth()}");
-        Console.WriteLine("Press enter to continue...");
+        Console.WriteLine($"{player.GetName()}'s Health: {player.GetHealth()}. \n");
+        Pause();
+    }
+    private void BattleMenu()
+    {
+        Console.Write("Choose your Action:");
+        Console.WriteLine("1. Attack");
+        Console.WriteLine("2. Heal");
+        Console.WriteLine("3. Run");
+        Console.WriteLine("4. View Enemy Stats (takes turn) \n");
+        Console.WriteLine(">");
+    }
+    private void Pause()
+    {
+        Console.WriteLine("Press enter to continue... ");
         Console.ReadLine();
+    }
+    private void Attack(Character player, Enemy enemy)
+    {
+        int damage = Math.Max(player.CalculateAttack() - enemy.GetDefense(), 1);
+        Console.WriteLine($"{player.GetName()} deals {damage} damage!");
+        enemy.TakeDamage(damage);
+        Console.WriteLine($"Enemy's Current Health: {enemy.GetHealth()}.\n");
+    }
+    private void Heal(Character player)
+    {
+        player.Recover();
+        Console.WriteLine("Health Recovered");
     }
     
 }

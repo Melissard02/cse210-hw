@@ -4,6 +4,7 @@ public abstract class Character
     protected string _name;
     protected string _weapon;
     protected int _health;
+    protected int _maxHealth;
     protected int _attack;
     protected int _defense;
     protected int _expThreshold;
@@ -11,11 +12,12 @@ public abstract class Character
     protected int _totalExp;
     protected int _level;
 
-    public Character(string name, string weapon, int health, int attack, int defense, int threshold, int exp, int level)
+    public Character(string name, string weapon, int health, int maxHealth, int attack, int defense, int threshold, int exp, int level)
     {
         _name = name;
         _weapon = weapon;
         _health = health;
+        _maxHealth = maxHealth;
         _attack = attack;
         _defense = defense;
         _expThreshold = threshold;
@@ -34,6 +36,8 @@ public abstract class Character
 
     public int GetHealth() => _health;
     public void SetHealth(int health) => _health = health;
+    public int GetMaxHealth() => _maxHealth;
+    public void SetMaxHealth(int maxHealth) => _maxHealth = maxHealth;
 
     public int GetAttack() => _attack;
     public void SetAttack(int attack) => _attack = attack;
@@ -59,27 +63,36 @@ public abstract class Character
         if (_health < 0) _health = 0;
     }
 
+    public virtual void Recover()
+    {
+        _health = _maxHealth;
+    }
+
     public void GainExp(int amount)
     {
         _exp += amount;
-        Console.WriteLine($"{_name} gained {_exp} EXP. LEVEL {_level}: {_exp}/{_expThreshold}");
         bool leveledUp = false;
         while (_exp >= _expThreshold)
         {
             _exp -= _expThreshold;
             _level++;
             _expThreshold = (int)(_expThreshold * 1.5);
+            _exp = 0;
+            _maxHealth = +15;
+            _health = _maxHealth;
+            _defense = +3;
+            _attack = +2;
             leveledUp = true;
-            //Debug lines
-            Console.WriteLine("Hello from the exp while loop");
-            Console.WriteLine($"Level: {_level}");
-            Console.WriteLine($"Threshold: {_expThreshold}");
-            Console.WriteLine($"Bool {leveledUp}");
-            Console.ReadLine();
         }
 
         if (leveledUp)
         {
+            Console.Clear();
+            Console.WriteLine("=== RPG BATTLE SIM ==="); ;
+            Console.WriteLine($"Character: {_name}");
+            Console.WriteLine($"Level: {_level}");
+            Console.WriteLine($"Health: {_health}/{_maxHealth}");
+            Console.WriteLine();
             Console.WriteLine($"{_name} the {GetType().Name} leveled up! LEVEL {_level}: {_exp}/{_expThreshold}");
         }
     }
@@ -87,7 +100,7 @@ public abstract class Character
     // Serialization
     public override string ToString()
     {
-        return $"{GetType().Name}|{_name}|{_weapon}|{_health}|{_attack}|{_defense}|{_expThreshold}|{_exp}|{_level}";
+        return $"{GetType().Name}|{_name}|{_weapon}|{_health}|{_maxHealth}|{_attack}|{_defense}|{_expThreshold}|{_exp}|{_level}";
     }
 
     public virtual string Serialize() => ToString();
@@ -103,11 +116,12 @@ public abstract class Character
         string weapon = parts[2];
 
         int health = int.Parse(parts[3]);
-        int attack = int.Parse(parts[4]);
-        int defense = int.Parse(parts[5]);
-        int threshold = int.Parse(parts[6]);
-        int exp = int.Parse(parts[7]);
-        int level = int.Parse(parts[8]);
+        int maxHealth = int.Parse(parts[4]);
+        int attack = int.Parse(parts[5]);
+        int defense = int.Parse(parts[6]);
+        int threshold = int.Parse(parts[7]);
+        int exp = int.Parse(parts[8]);
+        int level = int.Parse(parts[9]);
 
         Character character = type switch
         {
@@ -121,6 +135,7 @@ public abstract class Character
         // Overwrite stats with saved data
         character._weapon = weapon;
         character._health = health;
+        character._maxHealth = maxHealth;
         character._attack = attack;
         character._defense = defense;
         character._expThreshold = threshold;

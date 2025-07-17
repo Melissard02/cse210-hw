@@ -7,6 +7,7 @@ public class Enemy
     protected int _attack;
     protected string _weapon;
     protected int _giveExp;
+    protected bool _dead;
 
     public Enemy(int health, int defense, int attack, string weapon, int giveExp)
     {
@@ -27,6 +28,7 @@ public class Enemy
     public void SetDefense(int defense) => _defense = defense;
     public int GetGiveExp() => _giveExp;
     public void SetGiveExp(int giveExp) => _giveExp = giveExp;
+    public bool SetDead(bool dead) => _dead = dead;
 
 
     public void TakeDamage(int damage)
