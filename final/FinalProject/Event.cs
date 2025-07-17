@@ -84,7 +84,7 @@ public class Event
     private bool PlayerTurn(Character player, Enemy enemy)
     {
         BattleScreen(player);
-        Console.WriteLine("--Player Turn--");
+        Console.WriteLine("-- Player Turn --");
         BattleMenu();
         string input = Console.ReadLine();
         switch (input)
@@ -115,7 +115,7 @@ public class Event
     private void EnemyTurn(Character player, Enemy enemy)
     {
         BattleScreen(player);
-        Console.WriteLine("--Enemy Turn--");
+        Console.WriteLine("-- Enemy Turn --");
         int damage = Math.Max(enemy.GetAttack() - player.GetDefense(), 1);
         Console.WriteLine($"Enemy dealt {damage} damage!");
         player.TakeDamage(damage);
@@ -128,8 +128,8 @@ public class Event
         Console.WriteLine("1. Attack");
         Console.WriteLine("2. Heal");
         Console.WriteLine("3. Run");
-        Console.WriteLine("4. View Enemy Stats (takes turn) \n");
-        Console.Write(">");
+        Console.WriteLine("4. View Enemy Stats (Takes 1 turn) \n");
+        Console.Write("> ");
     }
     private void Pause()
     {
@@ -138,6 +138,9 @@ public class Event
     }
     private void Attack(Character player, Enemy enemy)
     {
+        Console.Clear();
+        BattleScreen(player);
+        Console.WriteLine("-- Player Turn --");
         int damage = Math.Max(player.CalculateAttack() - enemy.GetDefense(), 1);
         Console.WriteLine($"{player.GetName()} deals {damage} damage!");
         enemy.TakeDamage(damage);
@@ -146,6 +149,9 @@ public class Event
     private void Heal(Character player)
     {
         player.Recover();
+        Console.Clear();
+        BattleScreen(player);
+        Console.WriteLine("-- Player Turn --");
         Console.WriteLine("Health Recovered");
     }
     
