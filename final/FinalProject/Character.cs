@@ -25,34 +25,15 @@ public abstract class Character
         _level = level;
     }
 
-    public Character() { }
-
     // Getters and Setters
     public string GetName() => _name;
     public void SetName(string name) => _name = name;
 
-    public string GetWeapon() => _weapon;
-    public void SetWeapon(string weapon) => _weapon = weapon;
-
     public int GetHealth() => _health;
-    public void SetHealth(int health) => _health = health;
-    public int GetMaxHealth() => _maxHealth;
-    public void SetMaxHealth(int maxHealth) => _maxHealth = maxHealth;
-
-    public int GetAttack() => _attack;
-    public void SetAttack(int attack) => _attack = attack;
 
     public int GetDefense() => _defense;
-    public void SetDefense(int defense) => _defense = defense;
-
-    public int GetThreshold() => _expThreshold;
-    public void SetThreshold(int threshold) => _expThreshold = threshold;
-
-    public int GetExp() => _exp;
-    public void SetExp(int exp) => _exp = exp;
 
     public int GetLevel() => _level;
-    public void SetLevel(int level) => _level = level;
 
     // Combat methods for Polymorphism
     public virtual int CalculateAttack() => _attack;
