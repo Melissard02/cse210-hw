@@ -27,7 +27,6 @@ public abstract class Character
 
     // Getters and Setters
     public string GetName() => _name;
-    public void SetName(string name) => _name = name;
 
     public int GetHealth() => _health;
 
