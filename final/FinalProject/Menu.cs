@@ -41,6 +41,7 @@ public class Menu
                     if (_character != null)
                     {
                         Event battle = new Event();
+                        battle.LocationMenu(_character);
                         battle.StartBattle(_character);
                     }
                     else

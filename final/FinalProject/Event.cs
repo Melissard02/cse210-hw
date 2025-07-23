@@ -2,17 +2,60 @@
 using System;
 public class Event
 {
+    private Location _currentLocation = Location.Fields;
     private Random _rand = new Random();
     public bool _dead;
+    private List<LocationInfo> _locations = new List<LocationInfo>()
+    {
+        new LocationInfo(Location.Fields, 1, "Fields"),
+        new LocationInfo(Location.Caves, 5, "Caves"),
+        new LocationInfo(Location.Mountains, 10, "Mountains")
+    };
+    public void LocationMenu(Character player)
+    {
+        Console.Clear();
+        Console.WriteLine($"=== Where will you go {player.GetName()}? ===");
+
+        List<LocationInfo> availableLocations = _locations
+            .Where(loc => player.GetLevel() >= loc.RequiredLevel)
+            .ToList();
+
+        for (int i = 0; i < availableLocations.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {availableLocations[i].LocationName}");
+        }
+
+        Console.WriteLine("\n> ");
+        string input = Console.ReadLine();
+        if (int.TryParse(input, out int choice) && choice >= 1 && choice <= availableLocations.Count)
+        {
+            _currentLocation = availableLocations[choice - 1].Location;
+            Console.WriteLine($"\nYou travel to the {availableLocations[choice - 1].LocationName}... \n");
+        }
+        else
+        {
+            Console.WriteLine("Invalid input. I guess stay put then...");
+        }
+
+        Pause();
+
+    }
     private Enemy GenEnemy()
     {
-        int health = _rand.Next(30, 61);
-        int attack = _rand.Next(5, 16);
-        int defense = _rand.Next(2, 8);
-        string weapon = "Sword";
-        int giveExp = _rand.Next(10, 31);
+        int roll = _rand.Next(0, 100);
 
-        return new Enemy(health, defense, attack, weapon, giveExp);
+        if (roll < 60)
+        {
+            return new Goblin();
+        }
+        else if (roll < 95)
+        {
+            return new Bandit();
+        }
+        else
+        {
+            return new Dragon();
+        }
     }
     public bool IsPlayerDead(Character player)
     {
@@ -74,6 +117,7 @@ public class Event
     }
     private void EnemyStats(Enemy enemy)
     {
+        Console.WriteLine($"--{enemy.GetName}--");
         Console.WriteLine("Enemy Stats:");
         Console.WriteLine($"Health: {enemy.GetHealth()}");
         Console.WriteLine($"Defense: {enemy.GetDefense()}");
